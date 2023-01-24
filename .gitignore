@@ -125,3 +125,6 @@ ipch/
 *.msix
 *.msm
 *.msp
+
+# Rider files
+.idea/
