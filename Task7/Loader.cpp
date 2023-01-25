@@ -33,5 +33,9 @@ const Matrix& Loader::FileLoader()
 {
     ifstream input;
     input.open("Input.txt", ios::in);
+    if(!input)
+    {
+        
+    }
     input.close();
 }

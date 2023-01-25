@@ -16,7 +16,7 @@ class ArithmeticalExceptions : public BaseException
 public:
 	ArithmeticalExceptions();
 	ArithmeticalExceptions(const string& ErrorText);
-	virtual const string& GetMessage() const;
+	virtual const string& GetMessage() const override;
 };
 
 class MatricesDoNotMatch final : public ArithmeticalExceptions
@@ -24,7 +24,7 @@ class MatricesDoNotMatch final : public ArithmeticalExceptions
 public:
 	MatricesDoNotMatch();
 	MatricesDoNotMatch(const string& ErrorText);
-	virtual const string& GetMessage() const;
+	virtual const string& GetMessage() const override;
 };
 
 class DeterminantWasEqualToZero final : public ArithmeticalExceptions
@@ -32,7 +32,7 @@ class DeterminantWasEqualToZero final : public ArithmeticalExceptions
 public:
 	DeterminantWasEqualToZero();
 	DeterminantWasEqualToZero(const string& ErrorText);
-	virtual const string& GetMessage() const;
+	virtual const string& GetMessage() const override;
 };
 
 class MatricesCanNotBeCompared final : public ArithmeticalExceptions
@@ -40,7 +40,7 @@ class MatricesCanNotBeCompared final : public ArithmeticalExceptions
 public:
 	MatricesCanNotBeCompared();
 	MatricesCanNotBeCompared(const string& ErrorText);
-	virtual const string& GetMessage() const;
+	virtual const string& GetMessage() const override;
 };
 
 class OverflowExceptions : public BaseException
@@ -48,7 +48,7 @@ class OverflowExceptions : public BaseException
 public:
 	OverflowExceptions();
 	OverflowExceptions(const string& ErrorText);
-	virtual const string& GetMessage() const;
+	virtual const string& GetMessage() const override;
 };
 
 class OverflowWhenAddingMatrices final : public OverflowExceptions
@@ -56,7 +56,7 @@ class OverflowWhenAddingMatrices final : public OverflowExceptions
 public:
 	OverflowWhenAddingMatrices();
 	OverflowWhenAddingMatrices(const string& ErrorText);
-	virtual const string& GetMessage() const;
+	virtual const string& GetMessage() const override;
 };
 
 class OverflowWhenSubtractingMatrices final : public OverflowExceptions
@@ -64,5 +64,13 @@ class OverflowWhenSubtractingMatrices final : public OverflowExceptions
 public:
 	OverflowWhenSubtractingMatrices();
 	OverflowWhenSubtractingMatrices(const string& ErrorText);
-	virtual const string& GetMessage() const;
+	const string& GetMessage() const override;
+};
+
+class CannotOpenTheFileException final : public BaseException
+{
+public:
+	CannotOpenTheFileException();
+	CannotOpenTheFileException(const string& ErrorText);
+	const string& GetMessage() const override;
 };

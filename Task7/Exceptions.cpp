@@ -84,3 +84,18 @@ const string& OverflowWhenSubtractingMatrices::GetMessage() const
 {
 	return TextOfMessage;
 }
+
+CannotOpenTheFileException::CannotOpenTheFileException()
+{
+	TextOfMessage = "Error. File cannot be opened";
+}
+
+CannotOpenTheFileException::CannotOpenTheFileException(const string& ErrorText)
+{
+	TextOfMessage = ErrorText;
+}
+
+const string& CannotOpenTheFileException::GetMessage() const
+{
+	return TextOfMessage;
+}
