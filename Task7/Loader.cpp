@@ -1,4 +1,5 @@
 #include "Loader.h"
+#include <fstream>
 
 const Matrix& Loader::ConsoleLoader()
 {
@@ -30,5 +31,7 @@ const Matrix& Loader::ConsoleLoader()
 
 const Matrix& Loader::FileLoader()
 {
-    
+    ifstream input;
+    input.open("Input.txt", ios::in);
+    input.close();
 }

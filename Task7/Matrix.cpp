@@ -1,6 +1,6 @@
 #include "Matrix.h"
 
-Matrix::Matrix() : Lines(3), Columns(3)
+Matrix::Matrix() : Columns(3), Lines(3)
 {
 	MatrixElements = new double* [Lines];
 	for (size_t i = 0; i < Lines; ++i) 
@@ -17,7 +17,7 @@ Matrix::Matrix() : Lines(3), Columns(3)
 };
 
 Matrix::Matrix(const double** AnotherMatrix, const size_t AnotherMatrixLines,
-               const size_t AnotherMatrixColumns) : Lines(AnotherMatrixLines), Columns(AnotherMatrixColumns)
+               const size_t AnotherMatrixColumns) : Columns(AnotherMatrixColumns), Lines(AnotherMatrixLines)
 {
 	MatrixElements = new double* [Lines];
 	for (size_t i = 0; i < Lines; ++i)
@@ -33,7 +33,7 @@ Matrix::Matrix(const double** AnotherMatrix, const size_t AnotherMatrixLines,
 	}
 };
 
-Matrix::Matrix(const Matrix& AnotherMatrix) : Lines(AnotherMatrix.Lines), Columns(AnotherMatrix.Columns)
+Matrix::Matrix(const Matrix& AnotherMatrix) : Columns(AnotherMatrix.Columns), Lines(AnotherMatrix.Lines)
 {
 	MatrixElements = new double* [Lines];
 	for (size_t i = 0; i < Lines; ++i)
@@ -49,19 +49,20 @@ Matrix::Matrix(const Matrix& AnotherMatrix) : Lines(AnotherMatrix.Lines), Column
 	}
 };
 
-Matrix::Matrix(Matrix&& AnotherMatrix) : Lines(AnotherMatrix.Lines), Columns(AnotherMatrix.Columns), MatrixElements(AnotherMatrix.MatrixElements)
+Matrix::Matrix(Matrix&& AnotherMatrix) : MatrixElements(AnotherMatrix.MatrixElements), Columns(AnotherMatrix.Columns),
+                                         Lines(AnotherMatrix.Lines)
 {
 	AnotherMatrix.MatrixElements = nullptr;
 };
 
-Matrix::Matrix(const int Number) : Lines(1), Columns(1)
+Matrix::Matrix(const int Number) : Columns(1), Lines(1)
 {
 	MatrixElements = new double* [1];
 	MatrixElements[0] = new double[1];
 	MatrixElements[0][0] = Number;
 };
 
-Matrix::Matrix(const char* AnotherMatrix) : Lines(0), Columns(1)
+Matrix::Matrix(const char* AnotherMatrix) : Columns(1), Lines(0)
 {
 	size_t i = 0, j = 0;
 	size_t Col = 1;
@@ -85,9 +86,8 @@ Matrix::Matrix(const char* AnotherMatrix) : Lines(0), Columns(1)
 		MatrixElements[i] = new double[Columns];
 	}
 	const char s[6] = "[];, ";
-	char* Number;
 	char* NextNumber;
-	Number = strtok_s((char*)AnotherMatrix, s, &NextNumber);
+	char* Number = strtok_s((char*)AnotherMatrix, s, &NextNumber);
 	for (i = 0; i < Lines; ++i)
 	{
 		for (j = 0; j < Columns; j++)
