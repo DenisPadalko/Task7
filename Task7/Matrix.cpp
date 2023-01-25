@@ -16,7 +16,8 @@ Matrix::Matrix() : Lines(3), Columns(3)
 	}
 };
 
-Matrix::Matrix(const double** AnotherMatrix, const size_t AnotherMatrixLines, const size_t AnotherMatrixColumns) : Lines(AnotherMatrixLines), Columns(AnotherMatrixColumns)
+Matrix::Matrix(const double** AnotherMatrix, const size_t AnotherMatrixLines,
+               const size_t AnotherMatrixColumns) : Lines(AnotherMatrixLines), Columns(AnotherMatrixColumns)
 {
 	MatrixElements = new double* [Lines];
 	for (size_t i = 0; i < Lines; ++i)

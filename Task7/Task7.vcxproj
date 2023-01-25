@@ -154,11 +154,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Loader.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Exceptions.cpp" />
     <ClCompile Include="Task7.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Loader.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Exceptions.h" />
   </ItemGroup>
