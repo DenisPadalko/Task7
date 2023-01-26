@@ -31,11 +31,24 @@ const Matrix& Loader::ConsoleLoader()
 
 const Matrix& Loader::FileLoader()
 {
-    ifstream input;
-    input.open("Input.txt", ios::in);
-    if(!input)
+    ifstream Input;
+    Input.open("Input.txt", ios::in);
+    if(!Input)
     {
-        
+        throw CannotOpenTheFileException("Error. File is not opened");
     }
-    input.close();
+    int Lines, Columns;
+    Input >> Lines >> Columns;
+    double** NewArray = new double*[Lines];
+    for(int i = 0; i < Lines; ++i)
+    {
+        NewArray[i] = new double[Columns];
+        for(int j = 0; j < Columns; ++j)
+        {
+            Input >> NewArray[i][j];
+        }
+    }
+    Input.close();
+    Matrix* NewMatrix = new Matrix((const double**)NewArray, Lines, Columns);
+    return *NewMatrix;
 }
