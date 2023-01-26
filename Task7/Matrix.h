@@ -23,7 +23,7 @@ public:
 	Matrix& operator=(Matrix&& AnotherMatrix);
 	void ShowMatrix() const;
 	void ConvertMatrixToString(string& Str) const;
-	const double** GetMatrix() const;
+	double** GetMatrix() const;
 	void SetMatrixElem(const double Elem, const size_t LinesPosition, const size_t ColumnsPosition);
 	void SetMatrix(double** Matr);
 	const size_t GetLines() const;

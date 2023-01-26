@@ -4,6 +4,6 @@
 class Loader
 {
 public:
-    const Matrix& ConsoleLoader();
-    const Matrix& FileLoader();
+    static const Matrix& ConsoleLoader();
+    static const Matrix& FileLoader();
 };

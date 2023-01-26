@@ -189,9 +189,9 @@ void Matrix::ConvertMatrixToString(string& Str) const
 	Str += ']';
 };
 
-const double** Matrix::GetMatrix() const
+double** Matrix::GetMatrix() const
 {
-	return (const double**)MatrixElements;
+	return MatrixElements;
 };
 
 void Matrix::SetMatrixElem(const double Elem, const size_t LinesPosition, const size_t ColumnsPosition)
