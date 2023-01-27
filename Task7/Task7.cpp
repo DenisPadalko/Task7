@@ -16,7 +16,7 @@ int main(int argc, char* argv[])
         }
         cout << endl;
     }
-    MatrixArray[1] = Loader::ConsoleLoader();
+    MatrixArray[1] = new Matrix(Loader::ConsoleLoader());
     cout << "Matrix read from the console" << endl;
     for(size_t i = 0; i < MatrixArray[1]->GetLines(); ++i)
     {

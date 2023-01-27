@@ -32,9 +32,7 @@ const double CalculateTraceOfTheMatrix(const Matrix* SomeMatrix)
 
 int Compare(const void* FirstMatrix, const void* SecondMatrix)
 {
-    const Matrix* Matr = static_cast<const Matrix*>(FirstMatrix);
     double FirstResult = CalculateSumOfElementsInDiagonals(static_cast<const Matrix*>(FirstMatrix));
-    const Matrix* Matr2 = static_cast<const Matrix*>(FirstMatrix);
     double SecondResult = CalculateSumOfElementsInDiagonals(static_cast<const Matrix*>(SecondMatrix));
     if(FirstResult == SecondResult)
     {
