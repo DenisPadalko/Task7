@@ -5,6 +5,6 @@
 class Sorter
 {
 public:
-    static void QuickSort(vector<Matrix*> Vec);
-    static void UsualSort(vector<Matrix*> Vec);
+    static void QuickSort(const Matrix** MatrixArray, const size_t Size);
+    static void UsualSort(const Matrix** MatrixArray, const size_t Size);
 };

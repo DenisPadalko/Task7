@@ -2,31 +2,28 @@
 
 #include <algorithm>
 
-const double CalculateSumOfElementsInDiagonals(const Matrix& SomeMatrix)
+const double CalculateSumOfElementsInDiagonals(const Matrix* SomeMatrix)
 {
     double Result = 0;
-    double** MatrixElements = SomeMatrix.GetMatrix();
-    for(int i = 0; i < SomeMatrix.GetLines(); ++i)
+    double** MatrixElements = SomeMatrix->GetMatrix();
+    for(int i = 0; i < SomeMatrix->GetLines(); ++i)
     {
         Result += MatrixElements[i][i];
     }
-    for(int i = SomeMatrix.GetLines(); i > 0; --i)
+    for(int i = SomeMatrix->GetLines() - 1; i > 0; --i)
     {
         Result += MatrixElements[i][i];
     }
-    for(int i = 0; i < SomeMatrix.GetLines(); ++i)
-    {
-        delete[] MatrixElements[i];
-    }
+    MatrixElements = nullptr;
     delete[] MatrixElements;
     return Result;
 }
 
-const double CalculateTraceOfTheMatrix(const Matrix& SomeMatrix)
+const double CalculateTraceOfTheMatrix(const Matrix* SomeMatrix)
 {
     double Result = 0;
-    double** MatrixElements = SomeMatrix.GetMatrix();
-    for(size_t i = 0; i < SomeMatrix.GetLines(); ++i)
+    double** MatrixElements = SomeMatrix->GetMatrix();
+    for(size_t i = 0; i < SomeMatrix->GetLines(); ++i)
     {
         Result += MatrixElements[i][i];
     }
@@ -35,25 +32,27 @@ const double CalculateTraceOfTheMatrix(const Matrix& SomeMatrix)
 
 int Compare(const void* FirstMatrix, const void* SecondMatrix)
 {
-    double FirstResult = CalculateSumOfElementsInDiagonals(*(Matrix*)FirstMatrix);
-    double SecondResult = CalculateSumOfElementsInDiagonals(*(Matrix*)SecondMatrix);
+    const Matrix* Matr = static_cast<const Matrix*>(FirstMatrix);
+    double FirstResult = CalculateSumOfElementsInDiagonals(static_cast<const Matrix*>(FirstMatrix));
+    const Matrix* Matr2 = static_cast<const Matrix*>(FirstMatrix);
+    double SecondResult = CalculateSumOfElementsInDiagonals(static_cast<const Matrix*>(SecondMatrix));
     if(FirstResult == SecondResult)
     {
-        FirstResult = CalculateTraceOfTheMatrix(*(Matrix*)FirstMatrix);
-        SecondResult = CalculateTraceOfTheMatrix(*(Matrix*)SecondMatrix);
-        if(FirstResult < SecondResult) return -1;
+        FirstResult = CalculateTraceOfTheMatrix(static_cast<const Matrix*>(FirstMatrix));
+        SecondResult = CalculateTraceOfTheMatrix(static_cast<const Matrix*>(SecondMatrix));
+        if(FirstResult < SecondResult) return 0;
         else return 1;
     }
-    else if(FirstResult < SecondResult) return -1;
+    else if(FirstResult < SecondResult) return 0;
     else return 1;
 }
 
-void Sorter::QuickSort(vector<Matrix*> Vec)
+void Sorter::QuickSort(const Matrix** MatrixArray, const size_t Size)
 {
-    qsort(Vec.data(), Vec.size(), sizeof(Matrix*), Compare);
+    qsort(MatrixArray, Size, sizeof(Matrix), Compare);
 }
 
-void Sorter::UsualSort(vector<Matrix*> Vec)
+void Sorter::UsualSort(const Matrix** MatrixArray, const size_t Size)
 {
-    sort(Vec.begin(), Vec.end(), Compare);
+    sort(MatrixArray, MatrixArray + Size, Compare);
 }

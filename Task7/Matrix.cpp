@@ -324,7 +324,7 @@ const double FindDeterminant(const Matrix& M)
 	{
 		for (size_t i = 0; i < M.GetLines(); ++i)
 		{
-			GetMatr(M.GetMatrix(), P, i, 0, M.GetLines());
+			GetMatr((const double**)M.GetMatrix(), P, i, 0, M.GetLines());
 			Matrix TempMatrix((const double**)(P), n, n);
 			Determinant = Determinant + k * M.GetMatrix()[i][0] * FindDeterminant(TempMatrix);
 			k = -k;
