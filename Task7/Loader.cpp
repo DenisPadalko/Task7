@@ -1,7 +1,7 @@
 #include "Loader.h"
 #include <fstream>
 
-const Matrix& Loader::ConsoleLoader()
+const Matrix& ConsoleLoader::Load() const
 {
     cout << "Enter matrix lines: ";
     int Lines;
@@ -20,7 +20,7 @@ const Matrix& Loader::ConsoleLoader()
             cin >> NewArray[i][j];
         }
     }
-    Matrix* NewMatrix = new Matrix((const double**)NewArray, Lines, Columns);
+    Matrix* NewMatrix = new Matrix(const_cast<const double**>(NewArray), Lines, Columns);
     for(int i = 0; i < Lines; ++i)
     {
         delete[] NewArray[i];
@@ -29,7 +29,7 @@ const Matrix& Loader::ConsoleLoader()
     return *NewMatrix;
 }
 
-const Matrix& Loader::FileLoader()
+const Matrix& FileLoader::Load() const
 {
     ifstream Input;
     Input.open("Input.txt", ios::in);
@@ -49,6 +49,6 @@ const Matrix& Loader::FileLoader()
         }
     }
     Input.close();
-    Matrix* NewMatrix = new Matrix((const double**)NewArray, Lines, Columns);
+    Matrix* NewMatrix = new Matrix(const_cast<const double**>(NewArray), Lines, Columns);
     return *NewMatrix;
 }

@@ -4,6 +4,17 @@
 class Loader
 {
 public:
-    static const Matrix& ConsoleLoader();
-    static const Matrix& FileLoader();
+    virtual const Matrix& Load() const = 0;
+};
+
+class ConsoleLoader : public Loader
+{
+public:
+    virtual const Matrix& Load() const override;
+};
+
+class FileLoader : public Loader
+{
+public:
+    virtual const Matrix& Load() const override;
 };

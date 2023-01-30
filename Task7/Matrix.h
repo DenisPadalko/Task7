@@ -3,7 +3,7 @@
 #include <string>
 #include <limits.h>
 #include "Exceptions.h"
-#include <array>
+#include <vector>
 
 using namespace std;
 class Matrix
