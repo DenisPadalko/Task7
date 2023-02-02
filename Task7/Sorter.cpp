@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-const double CalculateSumOfElementsInDiagonals(const Matrix* SomeMatrix)
+double CalculateSumOfElementsInDiagonals(const Matrix* SomeMatrix)
 {
     double Result = 0;
     double** MatrixElements = SomeMatrix->GetMatrix();
@@ -19,7 +19,7 @@ const double CalculateSumOfElementsInDiagonals(const Matrix* SomeMatrix)
     return Result;
 }
 
-const double CalculateTraceOfTheMatrix(const Matrix* SomeMatrix)
+double CalculateTraceOfTheMatrix(const Matrix* SomeMatrix)
 {
     double Result = 0;
     double** MatrixElements = SomeMatrix->GetMatrix();
@@ -30,7 +30,7 @@ const double CalculateTraceOfTheMatrix(const Matrix* SomeMatrix)
     return Result;
 }
 
-int Compare(const void* FirstMatrix, const void* SecondMatrix)
+bool Compare(const void* FirstMatrix, const void* SecondMatrix)
 {
     double FirstResult = CalculateSumOfElementsInDiagonals(static_cast<const Matrix*>(FirstMatrix));
     double SecondResult = CalculateSumOfElementsInDiagonals(static_cast<const Matrix*>(SecondMatrix));
@@ -38,19 +38,44 @@ int Compare(const void* FirstMatrix, const void* SecondMatrix)
     {
         FirstResult = CalculateTraceOfTheMatrix(static_cast<const Matrix*>(FirstMatrix));
         SecondResult = CalculateTraceOfTheMatrix(static_cast<const Matrix*>(SecondMatrix));
-        if(FirstResult < SecondResult) return 0;
-        else return 1;
+        if(FirstResult < SecondResult) return false;
+        else return true;
     }
-    else if(FirstResult < SecondResult) return 0;
-    else return 1;
+    else if(FirstResult < SecondResult) return false;
+    else return true;
 }
 
-void Sorter::QuickSort(const Matrix** MatrixArray, const size_t Size)
+int Partition(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int End)
 {
-    qsort(MatrixArray, Size, sizeof(Matrix), Compare);
+    Matrix* PivotMatrix = OutVectorOfMatrices[Start + (End - Start) / 2];
+    int i = Start;
+    int j = End;
+    while(i <= j)
+    {
+        while(Compare(PivotMatrix, OutVectorOfMatrices[i])) ++i;
+        while(Compare(OutVectorOfMatrices[j], PivotMatrix)) --j;
+        if(i <= j)
+        {
+            swap(OutVectorOfMatrices[i], OutVectorOfMatrices[j]);
+            ++i;
+            --j;
+        }
+    }
+    return i;
 }
 
-void Sorter::UsualSort(const Matrix** MatrixArray, const size_t Size)
+void QuickSorter::Sort(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int End) const
 {
-    sort(MatrixArray, MatrixArray + Size, Compare);
+    if(OutVectorOfMatrices.size() == 1) return;
+    if(Start < End)
+    {
+        int PivotIndex = Partition(OutVectorOfMatrices, Start, End);
+        Sort(OutVectorOfMatrices, Start, PivotIndex - 1);
+        Sort(OutVectorOfMatrices, PivotIndex, End);
+    }
+}
+
+void UsualSorter::Sort(vector<Matrix*>& OutVectorOfMatrices, const int, const int) const
+{
+    sort(OutVectorOfMatrices.begin(), OutVectorOfMatrices.end(), Compare);
 }

@@ -1,10 +1,20 @@
 #pragma once
 #include "Matrix.h"
-#include <vector>
 
 class Sorter
 {
 public:
-    static void QuickSort(const Matrix** MatrixArray, const size_t Size);
-    static void UsualSort(const Matrix** MatrixArray, const size_t Size);
+    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices, const int = 0, const int = 0) const = 0;
+};
+
+class QuickSorter : public Sorter
+{
+public:
+    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices, const int Start = 0, const int End = 0) const override;
+};
+
+class UsualSorter : public Sorter
+{
+public:
+    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices, const int = 0, const int = 0) const override;
 };
