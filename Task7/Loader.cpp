@@ -3,14 +3,14 @@
 
 const Matrix& ConsoleLoader::Load() const
 {
-    cout << "Enter matrix lines: ";
-    int Lines;
-    cin >> Lines;
+    cout << "Enter matrix Rows: ";
+    int Rows;
+    cin >> Rows;
     cout << "Enter matrix columns: ";
     int Columns;
     cin >> Columns;
-    double** NewArray = new double*[Lines];
-    for(int i = 0; i < Lines; ++i)
+    double** NewArray = new double*[Rows];
+    for(int i = 0; i < Rows; ++i)
     {
         NewArray[i] = new double[Columns];
         cout << endl << endl << "Line number " << i+1 << endl << endl;
@@ -20,8 +20,8 @@ const Matrix& ConsoleLoader::Load() const
             cin >> NewArray[i][j];
         }
     }
-    Matrix* NewMatrix = new Matrix(const_cast<const double**>(NewArray), Lines, Columns);
-    for(int i = 0; i < Lines; ++i)
+    Matrix* NewMatrix = new Matrix(const_cast<const double**>(NewArray), Rows, Columns);
+    for(int i = 0; i < Rows; ++i)
     {
         delete[] NewArray[i];
     }
@@ -37,10 +37,10 @@ const Matrix& FileLoader::Load() const
     {
         throw CannotOpenTheFileException("Error. File is not opened");
     }
-    int Lines, Columns;
-    Input >> Lines >> Columns;
-    double** NewArray = new double*[Lines];
-    for(int i = 0; i < Lines; ++i)
+    int Rows, Columns;
+    Input >> Rows >> Columns;
+    double** NewArray = new double*[Rows];
+    for(int i = 0; i < Rows; ++i)
     {
         NewArray[i] = new double[Columns];
         for(int j = 0; j < Columns; ++j)
@@ -49,6 +49,6 @@ const Matrix& FileLoader::Load() const
         }
     }
     Input.close();
-    Matrix* NewMatrix = new Matrix(const_cast<const double**>(NewArray), Lines, Columns);
+    Matrix* NewMatrix = new Matrix(const_cast<const double**>(NewArray), Rows, Columns);
     return *NewMatrix;
 }

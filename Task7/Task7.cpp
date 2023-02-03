@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     FileLoader LoaderFromFile;
     Matrix MatrixFromFile = LoaderFromFile.Load();
     cout << "Matrix read from the file: " << endl;
-    for(size_t i = 0; i < MatrixFromFile.GetLines(); ++i)
+    for(size_t i = 0; i < MatrixFromFile.GetRows(); ++i)
     {
         for(size_t j = 0; j < MatrixFromFile.GetColumns(); ++j)
         {
@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     ConsoleLoader LoaderFromConsole;
     Matrix MatrixFromConsole = LoaderFromConsole.Load();
     cout << "Matrix read from the console" << endl;
-    for(size_t i = 0; i < MatrixFromConsole.GetLines(); ++i)
+    for(size_t i = 0; i < MatrixFromConsole.GetRows(); ++i)
     {
         for(size_t j = 0; j < MatrixFromConsole.GetColumns(); ++j)
         {
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     QuickSorter Sorter;
     Sorter.Sort(Vec);
     cout << endl << "Sorted matrices: " << endl;
-    for(size_t i = 0; i < Vec[0]->GetLines(); ++i)
+    for(size_t i = 0; i < Vec[0]->GetRows(); ++i)
     {
         for(size_t j = 0; j < Vec[0]->GetColumns(); ++j)
         {
@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
         cout << endl;
     }
     cout << endl;
-    for(size_t i = 0; i < Vec[1]->GetLines(); ++i)
+    for(size_t i = 0; i < Vec[1]->GetRows(); ++i)
     {
         for(size_t j = 0; j < Vec[1]->GetColumns(); ++j)
         {

@@ -6,11 +6,11 @@ double CalculateSumOfElementsInDiagonals(const Matrix* SomeMatrix)
 {
     double Result = 0;
     double** MatrixElements = SomeMatrix->GetMatrix();
-    for(int i = 0; i < SomeMatrix->GetLines(); ++i)
+    for(int i = 0; i < SomeMatrix->GetRows(); ++i)
     {
         Result += MatrixElements[i][i];
     }
-    for(int i = SomeMatrix->GetLines() - 1; i > 0; --i)
+    for(int i = SomeMatrix->GetRows() - 1; i > 0; --i)
     {
         Result += MatrixElements[i][i];
     }
@@ -23,7 +23,7 @@ double CalculateTraceOfTheMatrix(const Matrix* SomeMatrix)
 {
     double Result = 0;
     double** MatrixElements = SomeMatrix->GetMatrix();
-    for(size_t i = 0; i < SomeMatrix->GetLines(); ++i)
+    for(size_t i = 0; i < SomeMatrix->GetRows(); ++i)
     {
         Result += MatrixElements[i][i];
     }

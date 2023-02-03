@@ -1,13 +1,13 @@
 #include "Matrix.h"
 
-Matrix::Matrix() : Columns(3), Lines(3)
+Matrix::Matrix() : Columns(3), Rows(3)
 {
-	MatrixElements = new double* [Lines];
-	for (size_t i = 0; i < Lines; ++i) 
+	MatrixElements = new double* [Rows];
+	for (size_t i = 0; i < Rows; ++i) 
 	{
 		MatrixElements[i] = new double[Columns];
 	}
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -16,15 +16,15 @@ Matrix::Matrix() : Columns(3), Lines(3)
 	}
 };
 
-Matrix::Matrix(const double** AnotherMatrix, const size_t AnotherMatrixLines,
-               const size_t AnotherMatrixColumns) : Columns(AnotherMatrixColumns), Lines(AnotherMatrixLines)
+Matrix::Matrix(const double** AnotherMatrix, const size_t AnotherMatrixRows,
+               const size_t AnotherMatrixColumns) : Columns(AnotherMatrixColumns), Rows(AnotherMatrixRows)
 {
-	MatrixElements = new double* [Lines];
-	for (size_t i = 0; i < Lines; ++i)
+	MatrixElements = new double* [Rows];
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		MatrixElements[i] = new double[Columns];
 	}
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -33,14 +33,14 @@ Matrix::Matrix(const double** AnotherMatrix, const size_t AnotherMatrixLines,
 	}
 };
 
-Matrix::Matrix(const Matrix& AnotherMatrix) : Columns(AnotherMatrix.Columns), Lines(AnotherMatrix.Lines)
+Matrix::Matrix(const Matrix& AnotherMatrix) : Columns(AnotherMatrix.Columns), Rows(AnotherMatrix.Rows)
 {
-	MatrixElements = new double* [Lines];
-	for (size_t i = 0; i < Lines; ++i)
+	MatrixElements = new double* [Rows];
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		MatrixElements[i] = new double[Columns];
 	}
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -50,19 +50,19 @@ Matrix::Matrix(const Matrix& AnotherMatrix) : Columns(AnotherMatrix.Columns), Li
 };
 
 Matrix::Matrix(Matrix&& AnotherMatrix) : MatrixElements(AnotherMatrix.MatrixElements), Columns(AnotherMatrix.Columns),
-                                         Lines(AnotherMatrix.Lines)
+                                         Rows(AnotherMatrix.Rows)
 {
 	AnotherMatrix.MatrixElements = nullptr;
 };
 
-Matrix::Matrix(const int Number) : Columns(1), Lines(1)
+Matrix::Matrix(const int Number) : Columns(1), Rows(1)
 {
 	MatrixElements = new double* [1];
 	MatrixElements[0] = new double[1];
 	MatrixElements[0][0] = Number;
 };
 
-Matrix::Matrix(const char* AnotherMatrix) : Columns(1), Lines(0)
+Matrix::Matrix(const char* AnotherMatrix) : Columns(1), Rows(0)
 {
 	size_t i = 0, j = 0;
 	size_t Col = 1;
@@ -74,21 +74,21 @@ Matrix::Matrix(const char* AnotherMatrix) : Columns(1), Lines(0)
 		}
 		else if (AnotherMatrix[i] == ';')
 		{
-			Lines += 1;
+			Rows += 1;
 			Columns = Col;
 			Col = 1;
 		}
 		i++;
 	}
-	MatrixElements = new double* [Lines];
-	for (i = 0; i < Lines; ++i)
+	MatrixElements = new double* [Rows];
+	for (i = 0; i < Rows; ++i)
 	{
 		MatrixElements[i] = new double[Columns];
 	}
 	const char s[6] = "[];, ";
 	char* NextNumber;
 	char* Number = strtok_s((char*)AnotherMatrix, s, &NextNumber);
-	for (i = 0; i < Lines; ++i)
+	for (i = 0; i < Rows; ++i)
 	{
 		for (j = 0; j < Columns; j++)
 		{
@@ -102,7 +102,7 @@ Matrix::~Matrix()
 {
 	if (MatrixElements != nullptr)
 	{
-		for (size_t i = 0; i < Lines; ++i)
+		for (size_t i = 0; i < Rows; ++i)
 		{
 			delete[] MatrixElements[i];
 		}
@@ -113,20 +113,20 @@ Matrix::~Matrix()
 Matrix& Matrix::operator=(const Matrix& AnotherMatrix)
 {
 	if (&AnotherMatrix == this) return *this;
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		delete[] MatrixElements[i];
 	}
 	delete[] MatrixElements;
 
 	Columns = AnotherMatrix.Columns;
-	Lines = AnotherMatrix.Lines;
-	MatrixElements = new double* [Lines];
-	for (size_t i = 0; i < Lines; i++)
+	Rows = AnotherMatrix.Rows;
+	MatrixElements = new double* [Rows];
+	for (size_t i = 0; i < Rows; i++)
 	{
 		MatrixElements[i] = new double[Columns];
 	}
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -141,16 +141,16 @@ Matrix& Matrix::operator=(Matrix&& AnotherMatrix)
 {
 	if (&AnotherMatrix == this) return *this;
 
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		delete[] MatrixElements[i];
 	}
 	delete[] MatrixElements;
 
-	Lines = AnotherMatrix.Lines;
+	Rows = AnotherMatrix.Rows;
 	Columns = AnotherMatrix.Columns;
 	MatrixElements = AnotherMatrix.MatrixElements;
-	for (size_t i = 0; i < AnotherMatrix.Lines; ++i)
+	for (size_t i = 0; i < AnotherMatrix.Rows; ++i)
 	{
 		delete[] AnotherMatrix.MatrixElements[i];
 	}
@@ -161,7 +161,7 @@ Matrix& Matrix::operator=(Matrix&& AnotherMatrix)
 
 void Matrix::ShowMatrix() const
 {
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -174,7 +174,7 @@ void Matrix::ShowMatrix() const
 void Matrix::ConvertMatrixToString(string& Str) const
 {
 	Str += '[';
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -194,14 +194,14 @@ double** Matrix::GetMatrix() const
 	return MatrixElements;
 };
 
-void Matrix::SetMatrixElem(const double Elem, const size_t LinesPosition, const size_t ColumnsPosition)
+void Matrix::SetMatrixElem(const double Elem, const size_t RowsPosition, const size_t ColumnsPosition)
 {
-	MatrixElements[LinesPosition][ColumnsPosition] = Elem;
+	MatrixElements[RowsPosition][ColumnsPosition] = Elem;
 };
 
 void Matrix::SetMatrix(double** Matr)
 {
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		delete[] MatrixElements[i];
 	}
@@ -209,14 +209,14 @@ void Matrix::SetMatrix(double** Matr)
 	MatrixElements = Matr;
 };
 
-const size_t Matrix::GetLines() const
+const size_t Matrix::GetRows() const
 {
-	return Lines;
+	return Rows;
 };
 
-void Matrix::SetLines(const int Number)
+void Matrix::SetRows(const int Number)
 {
-	Lines = Number;
+	Rows = Number;
 };
 
 const size_t Matrix::GetColumns() const
@@ -307,24 +307,24 @@ const double FindDeterminant(const Matrix& M)
 	double Determinant = 0;
 	int k, n;
 	double** P;
-	P = new double* [M.GetLines()];
-	for (int i = 0; i < M.GetLines(); ++i) P[i] = new double[M.GetLines()];
+	P = new double* [M.GetRows()];
+	for (int i = 0; i < M.GetRows(); ++i) P[i] = new double[M.GetRows()];
 	k = 1;
-	n = M.GetLines() - 1;
-	if (M.GetLines() == 1)
+	n = M.GetRows() - 1;
+	if (M.GetRows() == 1)
 	{
 		return M.GetMatrix()[0][0];
 	}
-	if (M.GetLines() == 2)
+	if (M.GetRows() == 2)
 	{
 		Determinant = M.GetMatrix()[0][0] * M.GetMatrix()[1][1] - (M.GetMatrix()[1][0] * M.GetMatrix()[0][1]);
 		return Determinant;
 	}
-	if (M.GetLines() > 2)
+	if (M.GetRows() > 2)
 	{
-		for (size_t i = 0; i < M.GetLines(); ++i)
+		for (size_t i = 0; i < M.GetRows(); ++i)
 		{
-			GetMatr((const double**)M.GetMatrix(), P, i, 0, M.GetLines());
+			GetMatr((const double**)M.GetMatrix(), P, i, 0, M.GetRows());
 			Matrix TempMatrix((const double**)(P), n, n);
 			Determinant = Determinant + k * M.GetMatrix()[i][0] * FindDeterminant(TempMatrix);
 			k = -k;
@@ -408,7 +408,7 @@ void FindAlgDop(const double** A, const int Size, double** B)
 
 void Matrix::MatrixTransponation()
 {
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = i; j < Columns; ++j)
 		{
@@ -417,14 +417,14 @@ void Matrix::MatrixTransponation()
 	}
 }
 
-void Matrix::CreateNullMatrix(const size_t Lines, const size_t Columns) 
+void Matrix::CreateNullMatrix(const size_t Rows, const size_t Columns) 
 {
-	MatrixElements = new double* [Lines];
-	for (size_t i = 0; i < Lines; ++i)
+	MatrixElements = new double* [Rows];
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		MatrixElements[i] = new double[Columns];
 	}
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -435,11 +435,11 @@ void Matrix::CreateNullMatrix(const size_t Lines, const size_t Columns)
 
 const Matrix& Matrix::operator+=(const Matrix& AnotherMatrix)
 {
-	if ((Lines != AnotherMatrix.Lines) || (Columns != AnotherMatrix.Columns))
+	if ((Rows != AnotherMatrix.Rows) || (Columns != AnotherMatrix.Columns))
 	{
 		throw MatricesDoNotMatch("Matrices don't match. Failed to add matrices");
 	}
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -455,7 +455,7 @@ const Matrix& Matrix::operator+=(const Matrix& AnotherMatrix)
 
 const Matrix& Matrix::operator+=(const int Number)
 {
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -471,11 +471,11 @@ const Matrix& Matrix::operator+=(const int Number)
 
 const Matrix& Matrix::operator-=(const Matrix& AnotherMatrix)
 {
-	if ((Lines != AnotherMatrix.Lines) || (Columns != AnotherMatrix.Columns))
+	if ((Rows != AnotherMatrix.Rows) || (Columns != AnotherMatrix.Columns))
 	{
 		throw MatricesDoNotMatch("Matrices don't match. Failed to subtract matrices");
 	}
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -491,7 +491,7 @@ const Matrix& Matrix::operator-=(const Matrix& AnotherMatrix)
 
 const Matrix& Matrix::operator-=(const int Number)
 {
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -507,18 +507,18 @@ const Matrix& Matrix::operator-=(const int Number)
 
 const Matrix& Matrix::operator*=(const Matrix& AnotherMatrix)
 {
-	if (Columns != AnotherMatrix.Lines)
+	if (Columns != AnotherMatrix.Rows)
 	{
 		throw MatricesDoNotMatch("Matrices don't match. Failed to multiply matrices");
 	}
 	Matrix Temp = move(*this);
 	Columns = AnotherMatrix.Columns;
-	CreateNullMatrix(Lines, Columns);
-	for (size_t i = 0; i < Lines; ++i)
+	CreateNullMatrix(Rows, Columns);
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
-			for (size_t k = 0; k < AnotherMatrix.Lines; ++k)
+			for (size_t k = 0; k < AnotherMatrix.Rows; ++k)
 			{
 				MatrixElements[i][j] += Temp.MatrixElements[i][k] * AnotherMatrix.MatrixElements[k][j];
 			}
@@ -529,7 +529,7 @@ const Matrix& Matrix::operator*=(const Matrix& AnotherMatrix)
 
 const Matrix& Matrix::operator*=(const int Number)
 {
-	for (size_t i = 0; i < Lines; ++i)
+	for (size_t i = 0; i < Rows; ++i)
 	{
 		for (size_t j = 0; j < Columns; ++j)
 		{
@@ -542,12 +542,12 @@ const Matrix& Matrix::operator*=(const int Number)
 const bool operator<(const Matrix& Left, const Matrix& Right)
 {
 	if (&Left == &Right) return false;
-	if ((Left.Lines != Right.Lines) || (Left.Columns != Right.Columns))
+	if ((Left.Rows != Right.Rows) || (Left.Columns != Right.Columns))
 	{
 		throw MatricesCanNotBeCompared("Those matrices cannot be compared");
 	}
 	bool Result = false;
-	for (size_t i = 0; i < Left.Lines; ++i)
+	for (size_t i = 0; i < Left.Rows; ++i)
 	{
 		for (size_t j = 0; j < Left.Columns; ++j)
 		{
@@ -576,12 +576,12 @@ const bool operator<=(const Matrix& Left, const Matrix& Right)
 const bool operator==(const Matrix& Left, const Matrix& Right)
 {
 	if (&Left == &Right) return true;
-	if ((Left.Lines != Right.Lines) || (Left.Columns != Right.Columns))
+	if ((Left.Rows != Right.Rows) || (Left.Columns != Right.Columns))
 	{
 		throw MatricesCanNotBeCompared("Those matrices cannot be compared");
 	}
 	bool Result = false;
-	for (size_t i = 0; i < Left.Lines; ++i)
+	for (size_t i = 0; i < Left.Rows; ++i)
 	{
 		for (size_t j = 0; j < Left.Columns; ++j)
 		{

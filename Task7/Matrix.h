@@ -11,10 +11,10 @@ class Matrix
 private:
 	double** MatrixElements;
 	size_t Columns;
-	size_t Lines;
+	size_t Rows;
 public:
 	Matrix();
-	Matrix(const double** AnotherMatrix, const size_t AnotherMatrixLines, const size_t AnotherMatrixColumns);
+	Matrix(const double** AnotherMatrix, const size_t AnotherMatrixRows, const size_t AnotherMatrixColumns);
 	Matrix(const Matrix& AnotherMatrix);
 	Matrix(Matrix&& AnotherMatrix);
 	Matrix(const int Number);
@@ -25,10 +25,10 @@ public:
 	void ShowMatrix() const;
 	void ConvertMatrixToString(string& Str) const;
 	double** GetMatrix() const;
-	void SetMatrixElem(const double Elem, const size_t LinesPosition, const size_t ColumnsPosition);
+	void SetMatrixElem(const double Elem, const size_t RowsPosition, const size_t ColumnsPosition);
 	void SetMatrix(double** Matr);
-	const size_t GetLines() const;
-	void SetLines(const int Number);
+	const size_t GetRows() const;
+	void SetRows(const int Number);
 	const size_t GetColumns() const;
 	void SetColumns(const int Number);
 
@@ -57,7 +57,7 @@ public:
 	friend const bool operator!=(const Matrix& Left, const Matrix& Right);
 
 	void MatrixTransponation();
-	void CreateNullMatrix(const size_t Lines, const size_t Columns);
+	void CreateNullMatrix(const size_t Rows, const size_t Columns);
 };
 
 const double FindDeterminant(const Matrix& M);
