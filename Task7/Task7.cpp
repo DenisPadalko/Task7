@@ -1,6 +1,7 @@
 #include "Matrix.h"
 #include "Loader.h"
 #include "Sorter.h"
+#include "Sorter.cpp"
 #include "Exceptions.h"
 
 int main(int argc, char* argv[])
@@ -27,26 +28,26 @@ int main(int argc, char* argv[])
         }
         cout << endl;
     }
-    vector<Matrix*> Vec;
-    Vec.push_back(&MatrixFromFile);
-    Vec.push_back(&MatrixFromConsole);
-    QuickSorter Sorter;
+    vector<Matrix> Vec;
+    Vec.push_back(MatrixFromFile);
+    Vec.push_back(MatrixFromConsole);
+    UsualSorter<Matrix> Sorter;
     Sorter.Sort(Vec);
     cout << endl << "Sorted matrices: " << endl;
-    for(size_t i = 0; i < Vec[0]->GetRows(); ++i)
+    for(size_t i = 0; i < Vec[0].GetRows(); ++i)
     {
-        for(size_t j = 0; j < Vec[0]->GetColumns(); ++j)
+        for(size_t j = 0; j < Vec[0].GetColumns(); ++j)
         {
-            cout << Vec[0]->GetMatrix()[i][j] << " ";
+            cout << Vec[0].GetMatrix()[i][j] << " ";
         }
         cout << endl;
     }
     cout << endl;
-    for(size_t i = 0; i < Vec[1]->GetRows(); ++i)
+    for(size_t i = 0; i < Vec[1].GetRows(); ++i)
     {
-        for(size_t j = 0; j < Vec[1]->GetColumns(); ++j)
+        for(size_t j = 0; j < Vec[1].GetColumns(); ++j)
         {
-            cout << Vec[1]->GetMatrix()[i][j] << " ";
+            cout << Vec[1].GetMatrix()[i][j] << " ";
         }
         cout << endl;
     }

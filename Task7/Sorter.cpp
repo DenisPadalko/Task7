@@ -1,18 +1,19 @@
 #include "Sorter.h"
 #include <algorithm>
 
-int Partition(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int End)
+template <typename T>
+int Partition(vector<T>& DataToSort, const int Start, const int End)
 {
-    Matrix* PivotMatrix = OutVectorOfMatrices[Start + (End - Start) / 2];
+    T PivotMatrix = DataToSort[Start + (End - Start) / 2];
     int i = Start;
     int j = End;
     while(i <= j)
     {
-        while(PivotMatrix < OutVectorOfMatrices[i]) ++i;
-        while(OutVectorOfMatrices[j] < PivotMatrix) --j;
+        while(PivotMatrix < DataToSort[i]) ++i;
+        while(DataToSort[j] < PivotMatrix) --j;
         if(i <= j)
         {
-            swap(OutVectorOfMatrices[i], OutVectorOfMatrices[j]);
+            swap(DataToSort[i], DataToSort[j]);
             ++i;
             --j;
         }
@@ -20,24 +21,40 @@ int Partition(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int E
     return i;
 }
 
-void QuickSorter::Sort(vector<Matrix*>& OutVectorOfMatrices) const
+template <typename T>
+void QuickSorter<T>::Sort(vector<T>& DataToSort) const
 {
-    Sort_Internal(OutVectorOfMatrices, 0, OutVectorOfMatrices.size() - 1);
+    Sort_Internal(DataToSort, 0, DataToSort.size() - 1);
 }
 
-
-void QuickSorter::Sort_Internal(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int End) const
+template <typename T>
+void QuickSorter<T>::Sort_Internal(vector<T>& DataToSort, const int Start, const int End) const
 {
-    if(OutVectorOfMatrices.size() == 1) return;
+    if(DataToSort.size() == 1) return;
     if(Start < End)
     {
-        int PivotIndex = Partition(OutVectorOfMatrices, Start, End);
-        Sort_Internal(OutVectorOfMatrices, Start, PivotIndex - 1);
-        Sort_Internal(OutVectorOfMatrices, PivotIndex, End);
+        int PivotIndex = Partition(DataToSort, Start, End);
+        Sort_Internal(DataToSort, Start, PivotIndex - 1);
+        Sort_Internal(DataToSort, PivotIndex, End);
     }
 }
 
-void UsualSorter::Sort(vector<Matrix*>& OutVectorOfMatrices) const
+template <typename T>
+bool Compare(T& Left, T& Right)
 {
-    sort(OutVectorOfMatrices.begin(), OutVectorOfMatrices.end(), Compare);
+    bool Result = Left < Right;
+    return Result;
+}
+
+template <typename T>
+void UsualSorter<T>::Sort(vector<T>& DataToSort) const
+{
+    SortWithPredicate(DataToSort);
+}
+
+
+template <typename T>
+void UsualSorter<T>::SortWithPredicate(vector<T>& DataToSort) const
+{
+    sort(DataToSort.begin(), DataToSort.end(), Compare<T>);
 }

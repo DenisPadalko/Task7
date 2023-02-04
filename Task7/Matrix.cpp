@@ -141,20 +141,19 @@ Matrix& Matrix::operator=(Matrix&& AnotherMatrix)
 {
 	if (&AnotherMatrix == this) return *this;
 
-	for (size_t i = 0; i < Rows; ++i)
+	if(MatrixElements)
 	{
-		delete[] MatrixElements[i];
+		for (size_t i = 0; i < Rows; ++i)
+		{
+			delete[] MatrixElements[i];
+		}
+		delete[] MatrixElements;
 	}
-	delete[] MatrixElements;
 
 	Rows = AnotherMatrix.Rows;
 	Columns = AnotherMatrix.Columns;
 	MatrixElements = AnotherMatrix.MatrixElements;
-	for (size_t i = 0; i < AnotherMatrix.Rows; ++i)
-	{
-		delete[] AnotherMatrix.MatrixElements[i];
-	}
-	delete[] AnotherMatrix.MatrixElements;
+	AnotherMatrix.MatrixElements = nullptr;
 
 	return *this;
 };
@@ -555,8 +554,8 @@ const bool operator<(const Matrix& Left, const Matrix& Right)
 		if(FirstResult < SecondResult) return false;
 		else return true;
 	}
-	else if(FirstResult < SecondResult) return false;
-	else return true;
+	else if(FirstResult < SecondResult) return true;
+	else return false;
 };
 
 const bool operator>(const Matrix& Left, const Matrix& Right)
@@ -605,7 +604,7 @@ const float Matrix::CalculateSumOfElementsInDiagonals() const
 	{
 		Result += MatrixElements[i][i];
 	}
-	for(int i = Rows - 1; i > 0; --i)
+	for(int i = Rows - 1; i >= 0; --i)
 	{
 		Result += MatrixElements[i][i];
 	}
