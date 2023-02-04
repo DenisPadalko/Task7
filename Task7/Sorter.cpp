@@ -1,5 +1,4 @@
 #include "Sorter.h"
-
 #include <algorithm>
 
 double CalculateSumOfElementsInDiagonals(const Matrix* SomeMatrix)
@@ -64,18 +63,24 @@ int Partition(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int E
     return i;
 }
 
-void QuickSorter::Sort(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int End) const
+void QuickSorter::Sort(vector<Matrix*>& OutVectorOfMatrices) const
+{
+    Sort_Internal(OutVectorOfMatrices, 0, OutVectorOfMatrices.size() - 1);
+}
+
+
+void QuickSorter::Sort_Internal(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int End) const
 {
     if(OutVectorOfMatrices.size() == 1) return;
     if(Start < End)
     {
         int PivotIndex = Partition(OutVectorOfMatrices, Start, End);
-        Sort(OutVectorOfMatrices, Start, PivotIndex - 1);
-        Sort(OutVectorOfMatrices, PivotIndex, End);
+        Sort_Internal(OutVectorOfMatrices, Start, PivotIndex - 1);
+        Sort_Internal(OutVectorOfMatrices, PivotIndex, End);
     }
 }
 
-void UsualSorter::Sort(vector<Matrix*>& OutVectorOfMatrices, const int, const int) const
+void UsualSorter::Sort(vector<Matrix*>& OutVectorOfMatrices) const
 {
     sort(OutVectorOfMatrices.begin(), OutVectorOfMatrices.end(), Compare);
 }

@@ -4,17 +4,19 @@
 class Sorter
 {
 public:
-    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices, const int = 0, const int = 0) const = 0;
+    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices) const = 0;
 };
 
 class QuickSorter : public Sorter
 {
 public:
-    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices, const int Start = 0, const int End = 0) const override;
+    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices) const override;
+private:
+    void Sort_Internal(vector<Matrix*>& OutVectorOfMatrices, const int Start, const int End) const;
 };
 
 class UsualSorter : public Sorter
 {
 public:
-    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices, const int = 0, const int = 0) const override;
+    virtual void Sort(vector<Matrix*>& OutVectorOfMatrices) const override;
 };
