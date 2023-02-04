@@ -546,16 +546,17 @@ const bool operator<(const Matrix& Left, const Matrix& Right)
 	{
 		throw MatricesCanNotBeCompared("Those matrices cannot be compared");
 	}
-	bool Result = false;
-	for (size_t i = 0; i < Left.Rows; ++i)
+	float FirstResult = Left.CalculateSumOfElementsInDiagonals();
+	float SecondResult = Right.CalculateSumOfElementsInDiagonals();
+	if(FirstResult == SecondResult)
 	{
-		for (size_t j = 0; j < Left.Columns; ++j)
-		{
-			if (Left.MatrixElements[i][j] < Right.MatrixElements[i][j]) Result = true;
-			else Result = false;
-		}
+		FirstResult = Left.CalculateTraceOfTheMatrix();
+		SecondResult = Right.CalculateTraceOfTheMatrix();
+		if(FirstResult < SecondResult) return false;
+		else return true;
 	}
-	return Result;
+	else if(FirstResult < SecondResult) return false;
+	else return true;
 };
 
 const bool operator>(const Matrix& Left, const Matrix& Right)
@@ -570,7 +571,7 @@ const bool operator>=(const Matrix& Left, const Matrix& Right)
 
 const bool operator<=(const Matrix& Left, const Matrix& Right)
 {
-	return !(Left > Right);
+	return !(Right < Left);
 };
 
 const bool operator==(const Matrix& Left, const Matrix& Right)
@@ -596,3 +597,27 @@ const bool operator!=(const Matrix& Left, const Matrix& Right)
 {
 	return !(Left == Right);
 };
+
+const float Matrix::CalculateSumOfElementsInDiagonals() const
+{
+	float Result = 0;
+	for(int i = 0; i < Rows; ++i)
+	{
+		Result += MatrixElements[i][i];
+	}
+	for(int i = Rows - 1; i > 0; --i)
+	{
+		Result += MatrixElements[i][i];
+	}
+	return Result;
+}
+
+const float Matrix::CalculateTraceOfTheMatrix() const
+{
+	float Result = 0;
+	for(size_t i = 0; i < Rows; ++i)
+	{
+		Result += MatrixElements[i][i];
+	}
+	return Result;
+}

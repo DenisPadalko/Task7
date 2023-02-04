@@ -58,6 +58,9 @@ public:
 
 	void MatrixTransponation();
 	void CreateNullMatrix(const size_t Rows, const size_t Columns);
+
+	const float CalculateSumOfElementsInDiagonals() const;
+	const float CalculateTraceOfTheMatrix() const;
 };
 
 const double FindDeterminant(const Matrix& M);
