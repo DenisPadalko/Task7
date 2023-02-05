@@ -5,9 +5,8 @@
 template <typename T>
 class Sorter
 {
-private:
-    using PredicateType = function<bool(const T& left, const T& right)>;
 public:
+    using PredicateType = function<bool(const T& left, const T& right)>;
     virtual void Sort(vector<T>& DataToSort) const = 0;
     virtual void SortWithPredicate(vector<T>& DataToSort, const Sorter<T>::PredicateType& Predicate) const = 0;
 };

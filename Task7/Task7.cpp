@@ -7,47 +7,65 @@
 int main(int argc, char* argv[])
 {
     FileLoader LoaderFromFile;
-    Matrix MatrixFromFile = LoaderFromFile.Load();
-    cout << "Matrix read from the file: " << endl;
-    for(size_t i = 0; i < MatrixFromFile.GetRows(); ++i)
+    vector<string> InputFromFile = LoaderFromFile.Load();
+    vector<Matrix> MatricesFromFile;
+    for (auto& k : InputFromFile)
     {
-        for(size_t j = 0; j < MatrixFromFile.GetColumns(); ++j)
+        MatricesFromFile.push_back(k.c_str());
+        
+    }
+    for (auto& k : MatricesFromFile)
+    {
+        cout << "Matrix read from the file: " << endl;
+        for(size_t i = 0; i < k.GetRows(); ++i)
         {
-            cout << MatrixFromFile.GetMatrix()[i][j] << " ";
+            for(size_t j = 0; j < k.GetColumns(); ++j)
+            {
+                cout << k.GetMatrix()[i][j] << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
     }
     ConsoleLoader LoaderFromConsole;
-    Matrix MatrixFromConsole = LoaderFromConsole.Load();
-    cout << "Matrix read from the console" << endl;
-    for(size_t i = 0; i < MatrixFromConsole.GetRows(); ++i)
+    vector<string> InputFromConsole = LoaderFromConsole.Load();
+    vector<Matrix> MatricesFromConsole;
+    for(auto& k : InputFromConsole)
     {
-        for(size_t j = 0; j < MatrixFromConsole.GetColumns(); ++j)
+        MatricesFromConsole.push_back(InputFromConsole[0].c_str());
+    }
+    for(auto& k : MatricesFromConsole)
+    {
+        cout << "Matrix read from the console" << endl;
+        for(size_t i = 0; i < k.GetRows(); ++i)
         {
-            cout << MatrixFromConsole.GetMatrix()[i][j] << " ";
+            for(size_t j = 0; j < k.GetColumns(); ++j)
+            {
+                cout << k.GetMatrix()[i][j] << " ";
+            }
+            cout << endl;
         }
-        cout << endl;
     }
     vector<Matrix> Vec;
-    Vec.push_back(MatrixFromFile);
-    Vec.push_back(MatrixFromConsole);
+    for (auto& i : MatricesFromFile)
+    {
+        Vec.push_back(i);
+    }
+    for(auto& i : MatricesFromConsole)
+    {
+        Vec.push_back(i);
+    }
     UsualSorter<Matrix> Sorter;
     Sorter.Sort(Vec);
     cout << endl << "Sorted matrices: " << endl;
-    for(size_t i = 0; i < Vec[0].GetRows(); ++i)
+    for(auto& k : Vec)
     {
-        for(size_t j = 0; j < Vec[0].GetColumns(); ++j)
+        for(size_t i = 0; i < k.GetRows(); ++i)
         {
-            cout << Vec[0].GetMatrix()[i][j] << " ";
-        }
-        cout << endl;
-    }
-    cout << endl;
-    for(size_t i = 0; i < Vec[1].GetRows(); ++i)
-    {
-        for(size_t j = 0; j < Vec[1].GetColumns(); ++j)
-        {
-            cout << Vec[1].GetMatrix()[i][j] << " ";
+            for(size_t j = 0; j < k.GetColumns(); ++j)
+            {
+                cout << k.GetMatrix()[i][j] << " ";
+            }
+            cout << endl;
         }
         cout << endl;
     }

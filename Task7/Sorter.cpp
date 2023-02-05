@@ -22,7 +22,7 @@ int Partition(vector<T>& DataToSort, const int Start, const int End)
 }
 
 template <typename T>
-int PartitionWithPredicate(vector<T>& DataToSort, const int Start, const int End, const Sorter<T>::PredicateType& Predicate)
+int PartitionWithPredicate(vector<T>& DataToSort, const int Start, const int End, const typename Sorter<T>::PredicateType& Predicate)
 {
     T PivotMatrix = DataToSort[Start + (End - Start) / 2];
     int i = Start;
@@ -68,7 +68,7 @@ void QuickSorter<T>::Sort_Internal(vector<T>& DataToSort, const int Start, const
 
 template <typename T>
 void QuickSorter<T>::Sort_Internal_WithPredicate(vector<T>& DataToSort, const int Start, const int End,
-    const Sorter<T>::PredicateType& Predicate) const
+    const typename Sorter<T>::PredicateType& Predicate) const
 {
     if(DataToSort.size() == 1) return;
     if(Start < End)
@@ -88,7 +88,7 @@ void UsualSorter<T>::Sort(vector<T>& DataToSort) const
 
 
 template <typename T>
-void UsualSorter<T>::SortWithPredicate(vector<T>& DataToSort, const Sorter<T>::PredicateType& Predicate) const
+void UsualSorter<T>::SortWithPredicate(vector<T>& DataToSort, const typename Sorter<T>::PredicateType& Predicate) const
 {
     sort(DataToSort.begin(), DataToSort.end(), Predicate);
 }
