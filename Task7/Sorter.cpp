@@ -22,10 +22,37 @@ int Partition(vector<T>& DataToSort, const int Start, const int End)
 }
 
 template <typename T>
+int PartitionWithPredicate(vector<T>& DataToSort, const int Start, const int End, const Sorter<T>::PredicateType& Predicate)
+{
+    T PivotMatrix = DataToSort[Start + (End - Start) / 2];
+    int i = Start;
+    int j = End;
+    while(i <= j)
+    {
+        while(Predicate(PivotMatrix, DataToSort[i])) ++i;
+        while(Predicate(DataToSort[j], PivotMatrix)) --j;
+        if(i <= j)
+        {
+            swap(DataToSort[i], DataToSort[j]);
+            ++i;
+            --j;
+        }
+    }
+    return i;
+}
+
+template <typename T>
 void QuickSorter<T>::Sort(vector<T>& DataToSort) const
 {
     Sort_Internal(DataToSort, 0, DataToSort.size() - 1);
 }
+
+template <typename T>
+void QuickSorter<T>::SortWithPredicate(vector<T>& DataToSort, const typename Sorter<T>::PredicateType& Predicate) const
+{
+    Sort_Internal_WithPredicate(DataToSort, 0, DataToSort.size() - 1, Predicate);
+}
+
 
 template <typename T>
 void QuickSorter<T>::Sort_Internal(vector<T>& DataToSort, const int Start, const int End) const
@@ -40,21 +67,28 @@ void QuickSorter<T>::Sort_Internal(vector<T>& DataToSort, const int Start, const
 }
 
 template <typename T>
-bool Compare(T& Left, T& Right)
+void QuickSorter<T>::Sort_Internal_WithPredicate(vector<T>& DataToSort, const int Start, const int End,
+    const Sorter<T>::PredicateType& Predicate) const
 {
-    bool Result = Left < Right;
-    return Result;
+    if(DataToSort.size() == 1) return;
+    if(Start < End)
+    {
+        int PivotIndex = PartitionWithPredicate(DataToSort, Start, End);
+        Sort_Internal_WithPredicate(DataToSort, Start, PivotIndex - 1);
+        Sort_Internal_WithPredicate(DataToSort, PivotIndex, End);
+    }
 }
+
 
 template <typename T>
 void UsualSorter<T>::Sort(vector<T>& DataToSort) const
 {
-    SortWithPredicate(DataToSort);
+    sort(DataToSort.begin(), DataToSort.end());
 }
 
 
 template <typename T>
-void UsualSorter<T>::SortWithPredicate(vector<T>& DataToSort) const
+void UsualSorter<T>::SortWithPredicate(vector<T>& DataToSort, const Sorter<T>::PredicateType& Predicate) const
 {
-    sort(DataToSort.begin(), DataToSort.end(), Compare<T>);
+    sort(DataToSort.begin(), DataToSort.end(), Predicate);
 }
