@@ -19,8 +19,11 @@ public:
     virtual void SortWithPredicate(vector<T>& DataToSort, const Sorter<T>::PredicateType& Predicate) const override;
 private:
     void Sort_Internal(vector<T>& DataToSort, const int Start, const int End) const;
-    void Sort_Internal_WithPredicate(vector<T>& DataToSort, const int Start, const int End,
+    void SortWithPredicate_Internal(vector<T>& DataToSort, const int Start, const int End,
         const Sorter<T>::PredicateType& Predicate) const;
+    static int Partition(vector<T>& DataToSort, const int Start, const int End);
+    static int PartitionWithPredicate(vector<T>& DataToSort, const int Start, const int End,
+        const typename Sorter<T>::PredicateType& Predicate);
 };
 
 template <typename T>

@@ -2,7 +2,7 @@
 #include <algorithm>
 
 template <typename T>
-int Partition(vector<T>& DataToSort, const int Start, const int End)
+int QuickSorter<T>::Partition(vector<T>& DataToSort, const int Start, const int End)
 {
     T PivotMatrix = DataToSort[Start + (End - Start) / 2];
     int i = Start;
@@ -22,7 +22,8 @@ int Partition(vector<T>& DataToSort, const int Start, const int End)
 }
 
 template <typename T>
-int PartitionWithPredicate(vector<T>& DataToSort, const int Start, const int End, const typename Sorter<T>::PredicateType& Predicate)
+int QuickSorter<T>::PartitionWithPredicate(vector<T>& DataToSort, const int Start, const int End,
+    const typename Sorter<T>::PredicateType& Predicate)
 {
     T PivotMatrix = DataToSort[Start + (End - Start) / 2];
     int i = Start;
@@ -50,7 +51,7 @@ void QuickSorter<T>::Sort(vector<T>& DataToSort) const
 template <typename T>
 void QuickSorter<T>::SortWithPredicate(vector<T>& DataToSort, const typename Sorter<T>::PredicateType& Predicate) const
 {
-    Sort_Internal_WithPredicate(DataToSort, 0, DataToSort.size() - 1, Predicate);
+    SortWithPredicate_Internal(DataToSort, 0, DataToSort.size() - 1, Predicate);
 }
 
 
@@ -67,15 +68,15 @@ void QuickSorter<T>::Sort_Internal(vector<T>& DataToSort, const int Start, const
 }
 
 template <typename T>
-void QuickSorter<T>::Sort_Internal_WithPredicate(vector<T>& DataToSort, const int Start, const int End,
+void QuickSorter<T>::SortWithPredicate_Internal(vector<T>& DataToSort, const int Start, const int End,
     const typename Sorter<T>::PredicateType& Predicate) const
 {
     if(DataToSort.size() == 1) return;
     if(Start < End)
     {
         int PivotIndex = PartitionWithPredicate(DataToSort, Start, End, Predicate);
-        Sort_Internal_WithPredicate(DataToSort, Start, PivotIndex - 1, Predicate);
-        Sort_Internal_WithPredicate(DataToSort, PivotIndex, End, Predicate);
+        SortWithPredicate_Internal(DataToSort, Start, PivotIndex - 1, Predicate);
+        SortWithPredicate_Internal(DataToSort, PivotIndex, End, Predicate);
     }
 }
 
