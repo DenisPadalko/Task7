@@ -46,24 +46,24 @@ int main(int argc, char* argv[])
         }
     }
     vector<Matrix> Vec;
-    for (auto& i : MatricesFromFile)
+    for(int i = 0; i < MatricesFromFile.size(); ++i)
     {
-        Vec.push_back(i);
+        Vec.push_back(MatricesFromFile[i]);
     }
-    for(auto& i : MatricesFromConsole)
+    for(int i = 0; i < MatricesFromConsole.size(); ++i)
     {
-        Vec.push_back(i);
+        Vec.push_back(MatricesFromConsole[i]);
     }
-    UsualSorter<Matrix> Sorter;
+    QuickSorter<Matrix> Sorter;
     Sorter.Sort(Vec);
     cout << endl << "Sorted matrices: " << endl;
-    for(auto& k : Vec)
+    for(int k = 0; k < Vec.size(); ++k)
     {
-        for(size_t i = 0; i < k.GetRows(); ++i)
+        for(size_t i = 0; i < Vec[k].GetRows(); ++i)
         {
-            for(size_t j = 0; j < k.GetColumns(); ++j)
+            for(size_t j = 0; j < Vec[k].GetColumns(); ++j)
             {
-                cout << k.GetMatrix()[i][j] << " ";
+                cout << Vec[k].GetMatrix()[i][j] << " ";
             }
             cout << endl;
         }

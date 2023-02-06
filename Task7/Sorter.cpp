@@ -9,9 +9,9 @@ int Partition(vector<T>& DataToSort, const int Start, const int End)
     int j = End;
     while(i <= j)
     {
-        while(PivotMatrix < DataToSort[i]) ++i;
-        while(DataToSort[j] < PivotMatrix) --j;
-        if(i <= j)
+        while(DataToSort[i] < PivotMatrix) ++i;
+        while(DataToSort[j] > PivotMatrix) --j;
+        if(i < j)
         {
             swap(DataToSort[i], DataToSort[j]);
             ++i;
@@ -73,9 +73,9 @@ void QuickSorter<T>::Sort_Internal_WithPredicate(vector<T>& DataToSort, const in
     if(DataToSort.size() == 1) return;
     if(Start < End)
     {
-        int PivotIndex = PartitionWithPredicate(DataToSort, Start, End);
-        Sort_Internal_WithPredicate(DataToSort, Start, PivotIndex - 1);
-        Sort_Internal_WithPredicate(DataToSort, PivotIndex, End);
+        int PivotIndex = PartitionWithPredicate(DataToSort, Start, End, Predicate);
+        Sort_Internal_WithPredicate(DataToSort, Start, PivotIndex - 1, Predicate);
+        Sort_Internal_WithPredicate(DataToSort, PivotIndex, End, Predicate);
     }
 }
 

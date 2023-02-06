@@ -540,7 +540,7 @@ const Matrix& Matrix::operator*=(const int Number)
 
 const bool operator<(const Matrix& Left, const Matrix& Right)
 {
-	if (&Left == &Right) return false;
+	if (Left == Right) return false;
 	if ((Left.Rows != Right.Rows) || (Left.Columns != Right.Columns))
 	{
 		throw MatricesCanNotBeCompared("Those matrices cannot be compared");
@@ -585,11 +585,10 @@ const bool operator==(const Matrix& Left, const Matrix& Right)
 	{
 		for (size_t j = 0; j < Left.Columns; ++j)
 		{
-			if (Left.MatrixElements[i][j] == Right.MatrixElements[i][j]) Result = true;
-			else Result = false;
+			if (Left.MatrixElements[i][j] != Right.MatrixElements[i][j]) return false;
 		}
 	}
-	return Result;
+	return true;
 };
 
 const bool operator!=(const Matrix& Left, const Matrix& Right)
